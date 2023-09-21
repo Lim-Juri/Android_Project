@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.search_key.MainActivity
-import com.example.search_key.R
 import com.example.search_key.databinding.FragmentBookmarkBinding
 import com.example.search_key.model.SearchItemModel
 
