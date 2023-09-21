@@ -1,6 +1,7 @@
 package com.example.search.retrofit
 
 import com.example.search.data.ImageSearchResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -14,5 +15,5 @@ interface NetWorkInterface {
         @Query("sort") sort: String?,
         @Query("page") page: Int,
         @Query("size") size: Int
-    ): Response<ImageSearchResponse?>?
+    ): Call<ImageSearchResponse?>?
 }

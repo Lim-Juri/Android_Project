@@ -31,9 +31,13 @@ class BookmarkFragment : Fragment() {
         val fetchlike = activity as MainActivity
         likedItems = fetchlike.likedItems
 
+        Log.d("BookmarkFragment", "likedItems size = ${likedItems.size}")
+
         adapter = BookmarkAdapter(mContext).apply {
             items = likedItems.toMutableList()
         }
+
+        adapter.notifyDataSetChanged()
 
         binding = FragmentBookmarkBinding.inflate(inflater, container, false).apply {
             bookmarkRecyclerview.layoutManager =

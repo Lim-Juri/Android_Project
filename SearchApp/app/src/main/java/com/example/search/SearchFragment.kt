@@ -17,6 +17,7 @@ import com.example.search.retrofit.Constants
 import com.example.search.retrofit.RetrofitClient.apiService
 import com.example.search.retrofit.Utility
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 
@@ -61,7 +62,7 @@ class SearchFragment : Fragment() {
 
     private fun setupListener() {
 
-        binding.fmEtSearch.setOnClickListener {
+        binding.fmSearchBt.setOnClickListener {
 
             val query = binding.fmEtSearch.text.toString()
             if (query.isNotEmpty()) {
@@ -80,14 +81,14 @@ class SearchFragment : Fragment() {
 
     private fun fetchImageResults(query: String) {
         apiService.searchImage(Constants.AUTH_HEADER, query, "recency", 1, 80)
-            ?.enqueue(object Callback<ImageSearchResponse?> {
+            ?.enqueue(object : Callback<ImageSearchResponse?> {
                 override fun onResponse(
                     call: Call<ImageSearchResponse?>,
                     response: Response<ImageSearchResponse?>
                 ) {
                     response.body()?.metaData?.let { metaData ->
                         if (metaData.totalCount > 0) {
-                            response.body()!!.documents.forEach { document ->
+                            response.body()!!.documents?.forEach { document ->
                                 val title = document.displaySitename
                                 val date = document.datetime
                                 val url = document.thumbnailUrl
@@ -100,7 +101,7 @@ class SearchFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
 
-                override fun onFailure(call: Call<KakaoImage?>, t: Throwable) {
+                override fun onFailure(call: Call<ImageSearchResponse?>, t: Throwable) {
                     Log.e("error", "onFailure: ${t.message}")
                 }
             })
