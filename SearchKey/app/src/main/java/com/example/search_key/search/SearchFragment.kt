@@ -95,10 +95,13 @@ class SearchFragment : Fragment() {
     }
 
     // 입력한 검색어로 이미지를 검색하는 메서드
+    // 동기식 - 위에서 아래로 순서대로
     // 비동기식 - 호출하고 콜백을 기다림
     private fun fetchImageResults(query: String) {
         apiService.image_search(Constants.AUTH_HEADER, query, "recency", 1, 80)
             ?.enqueue(object : Callback<ImageModel?> {
+
+                // 제대로 통신이 되어서 응답 받았음
                 override fun onResponse(call: Call<ImageModel?>, response: Response<ImageModel?>) {
                     response.body()?.meta?.let { meta ->
 
@@ -116,6 +119,7 @@ class SearchFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
 
+                // 통신 실패..
                 override fun onFailure(call: Call<ImageModel?>, t: Throwable) {
                     Log.e("hi", "onFailure: ${t.message}")
                 }
