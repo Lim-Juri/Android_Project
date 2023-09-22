@@ -51,16 +51,26 @@ class BookmarkAdapter(var mContext: Context) : RecyclerView.Adapter<RecyclerView
         init {
             cl_item.setOnClickListener {
                 val position = adapterPosition
-                (mContext as MainActivity).removeLikedItem(items[position])
+                val item = items[position]
+                (mContext as MainActivity).removeLikedItem(item)
                 if (position != RecyclerView.NO_POSITION) {
-                    try {
-                        items.removeAt(position)
-                    } catch (e:Exception){
-                        Log.e("juri","items: $items,position: $position")
-                    }
-                    notifyDataSetChanged()
+                    items.remove(item)
+                    notifyItemRemoved(position)
                 }
             }
+
+//            cl_item.setOnClickListener {
+//                val position = adapterPosition
+//                (mContext as MainActivity).removeLikedItem(items[position])
+//                if (position != RecyclerView.NO_POSITION) {
+//                    try { // 특정 위치 지우기
+//                        items.removeAt(position)
+//                    } catch (e: Exception) {
+//                        Log.e("juri", "items: $items,position: $position")
+//                    }
+//                    notifyDataSetChanged()
+//                }
+//            }
         }
     }
 }
